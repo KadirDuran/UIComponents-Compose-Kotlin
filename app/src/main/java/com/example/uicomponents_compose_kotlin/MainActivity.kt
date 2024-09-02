@@ -2,6 +2,7 @@ package com.example.uicomponents_compose_kotlin
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.provider.ContactsContract.Profile
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -66,6 +67,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.example.uicomponents_compose_kotlin.R.color.light_white
+import com.example.uicomponents_compose_kotlin.pages.Menu
+import com.example.uicomponents_compose_kotlin.pages.PageThree
 import com.example.uicomponents_compose_kotlin.ui.theme.UIComponentsComposeKotlinTheme
 
 class MainActivity : ComponentActivity() {
@@ -86,103 +89,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-    Column(
-        modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.darkblue))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp, 20.dp, 20.dp, 10.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .clip(shape = CircleShape)
-                    .size(50.dp)
-                    .background(colorResource(id = R.color.dark_white))
-            )
-            {
-                Image(
-                    painter = painterResource(id = R.drawable.back), contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(10.dp)
-                )
-
-            }
-            Text(
-                text = "PROFILE",
-                fontSize = 20.sp,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily(Font(R.font.boldfont)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 40.dp)
-                    .align(Alignment.CenterVertically)
-            )
-
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset(y = 110.dp)
-        )
-        {
-            Image(
-                painter = painterResource(id = R.drawable.arc_3),
-                contentDescription = null,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset(y = 0.dp)
-        )
-        {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(painter = painterResource(id = R.drawable.user_2), contentDescription = null)
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colorResource(id = R.color.light_white))
-                ) {
-                    Text(
-                        text = "Kadir Duran",
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily(Font(R.font.boldfont)),
-                        color = colorResource(id = R.color.black)
-                    )
-                    Text(
-                        text = "kadirduran61@gmail.com",
-                        fontSize = 15.sp,
-                        fontFamily = FontFamily(Font(R.font.boldfont)),
-                        color = colorResource(id = R.color.black)
-                    )
-                }
-            }
-        }
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.light_white))
-        ) {
-            CreateListItem(title = "Notification", img = R.drawable.btn_1)
-            CreateListItem(title = "Calendar", img = R.drawable.btn_2)
-            CreateListItem(title = "Gallery", img = R.drawable.btn_3)
-            CreateListItem(title = "My Playlist", img = R.drawable.btn_4)
-            CreateListItem(title = "Share", img = R.drawable.btn_5)
-            CreateListItem(title = "Logout", img = R.drawable.btn_6)
-        }
-    }
+    val menuItemList = ArrayList<Menu>()
+    menuItemList.add(Menu(R.drawable.btn_1,"Notification"))
+    menuItemList.add(Menu(R.drawable.btn_2,"Calendar"))
+    menuItemList.add(Menu(R.drawable.btn_3,"Gallery"))
+    menuItemList.add(Menu(R.drawable.btn_4,"My Playlist"))
+    menuItemList.add(Menu(R.drawable.btn_5,"Share"))
+    menuItemList.add(Menu(R.drawable.btn_6,"Logout"))
+    PageThree(modifier = modifier, name = "Kadir Duran", email ="kadirduran60@gmail.com" ,R.drawable.user_2,menuItemList )
 }
 
 @Preview(showBackground = true)
@@ -193,29 +107,3 @@ fun GreetingPreview() {
     }
 }
 
-@Composable
-fun CreateListItem(title: String, img: Int) {
-    val context = LocalContext.current
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp)
-            .clickable {
-                Toast
-                    .makeText(context, title.toString(), Toast.LENGTH_LONG)
-                    .show()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    )
-    {
-        Image(
-            painter = painterResource(id = img), contentDescription = null,
-            modifier = Modifier.padding(start = 10.dp)
-        )
-        Text(
-            text = title,
-            color = colorResource(id = R.color.black),
-            modifier = Modifier.padding(start = 15.dp)
-        )
-    }
-}
