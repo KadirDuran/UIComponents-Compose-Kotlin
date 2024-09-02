@@ -2,12 +2,14 @@ package com.example.uicomponents_compose_kotlin
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,6 +52,8 @@ import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
@@ -82,62 +86,136 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-Column(
-    modifier
-        .fillMaxSize()
-        .background(colorResource(id = R.color.darkblue))) {
-
-    Row(modifier= Modifier
-        .fillMaxWidth()
-        .padding(20.dp, 20.dp, 20.dp, 10.dp)){
-        Box(modifier= Modifier
-            .clip(shape = CircleShape)
-            .size(50.dp)
-            .background(colorResource(id = R.color.dark_white)))
-        {
-            Image(painter = painterResource(id = R.drawable.back) , contentDescription ="",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(10.dp))
-
-        }
-        Text(text="PROFILE", fontSize = 20.sp, color = Color.White, textAlign = TextAlign.Center,
-            fontFamily = FontFamily(Font(R.font.boldfont)), modifier = Modifier
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.darkblue))
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 40.dp)
-                .align(Alignment.CenterVertically))
+                .padding(20.dp, 20.dp, 20.dp, 10.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(shape = CircleShape)
+                    .size(50.dp)
+                    .background(colorResource(id = R.color.dark_white))
+            )
+            {
+                Image(
+                    painter = painterResource(id = R.drawable.back), contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(10.dp)
+                )
 
-    }
+            }
+            Text(
+                text = "PROFILE",
+                fontSize = 20.sp,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.boldfont)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 40.dp)
+                    .align(Alignment.CenterVertically)
+            )
 
-    Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-
-
-
-        Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-    Image(painter = painterResource(id = R.drawable.arc_3), contentDescription ="")
-
-    Image(painter = painterResource(id = R.drawable.user_2), contentDescription = "")
-    Text("Kadir Duran", fontSize = 20.sp)
-    Text("kadirduran61@gmil.com")
         }
-        Column(modifier= Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .background(Color.White)) {
-            Text(text = "Selam")
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = 110.dp)
+        )
+        {
+            Image(
+                painter = painterResource(id = R.drawable.arc_3),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = 0.dp)
+        )
+        {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(painter = painterResource(id = R.drawable.user_2), contentDescription = null)
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colorResource(id = R.color.light_white))
+                ) {
+                    Text(
+                        text = "Kadir Duran",
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.boldfont)),
+                        color = colorResource(id = R.color.black)
+                    )
+                    Text(
+                        text = "kadirduran61@gmail.com",
+                        fontSize = 15.sp,
+                        fontFamily = FontFamily(Font(R.font.boldfont)),
+                        color = colorResource(id = R.color.black)
+                    )
+                }
+            }
+        }
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .background(colorResource(id = R.color.light_white))
+        ) {
+            CreateListItem(title = "Notification", img = R.drawable.btn_1)
+            CreateListItem(title = "Calendar", img = R.drawable.btn_2)
+            CreateListItem(title = "Gallery", img = R.drawable.btn_3)
+            CreateListItem(title = "My Playlist", img = R.drawable.btn_4)
+            CreateListItem(title = "Share", img = R.drawable.btn_5)
+            CreateListItem(title = "Logout", img = R.drawable.btn_6)
         }
     }
-
-
-
-
-
 }
-}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     UIComponentsComposeKotlinTheme {
         Greeting()
+    }
+}
+
+@Composable
+fun CreateListItem(title: String, img: Int) {
+    val context = LocalContext.current
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
+            .clickable {
+                Toast
+                    .makeText(context, title.toString(), Toast.LENGTH_LONG)
+                    .show()
+            },
+        verticalAlignment = Alignment.CenterVertically
+    )
+    {
+        Image(
+            painter = painterResource(id = img), contentDescription = null,
+            modifier = Modifier.padding(start = 10.dp)
+        )
+        Text(
+            text = title,
+            color = colorResource(id = R.color.black),
+            modifier = Modifier.padding(start = 15.dp)
+        )
     }
 }
