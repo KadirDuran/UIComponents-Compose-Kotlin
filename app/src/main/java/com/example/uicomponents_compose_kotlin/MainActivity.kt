@@ -71,7 +71,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.uicomponents_compose_kotlin.R.color.light_white
+import com.example.uicomponents_compose_kotlin.pages.BottomItemList
 import com.example.uicomponents_compose_kotlin.pages.Menu
+import com.example.uicomponents_compose_kotlin.pages.MidItemList
 import com.example.uicomponents_compose_kotlin.pages.PageOne
 import com.example.uicomponents_compose_kotlin.pages.PageThree
 import com.example.uicomponents_compose_kotlin.pages.PageTwo
@@ -89,7 +91,19 @@ class MainActivity : ComponentActivity() {
                             PageOne(navController)
                     }
                 composable(route = "PageTwo") {
-                    PageTwo(navController)
+                    val midItemList = ArrayList<MidItemList>()
+                    midItemList.add(MidItemList(R.drawable.favorites,"Favorites"))
+                    midItemList.add(MidItemList(R.drawable.message,"Messages"))
+                    midItemList.add(MidItemList(R.drawable.social,"Social"))
+                    midItemList.add(MidItemList(R.drawable.favorites,"Favorites"))
+                    midItemList.add(MidItemList(R.drawable.message,"Messages"))
+                    midItemList.add(MidItemList(R.drawable.social,"Social"))
+                    val bottomItemList = ArrayList<BottomItemList>()
+                    bottomItemList.add(BottomItemList(1,R.drawable.trends,"İmportant points in concluding a work on."))
+                    bottomItemList.add(BottomItemList(2,R.drawable.trends2,"İmportant points in concluding a work on."))
+                    bottomItemList.add(BottomItemList(3,R.drawable.trends,"İmportant points in concluding a work on."))
+                    bottomItemList.add(BottomItemList(4,R.drawable.trends2,"İmportant points in concluding a work on."))
+                    PageTwo(navController,midItemList,bottomItemList)
                 }
                 composable(route = "PageThree"){
                     ThreePageStart(modifier =Modifier,navController)

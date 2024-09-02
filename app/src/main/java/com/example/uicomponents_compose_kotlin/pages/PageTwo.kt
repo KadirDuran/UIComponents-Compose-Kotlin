@@ -1,7 +1,11 @@
 package com.example.uicomponents_compose_kotlin.pages
 
+import android.media.audiofx.AudioEffect.Descriptor
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +18,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -41,9 +48,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.uicomponents_compose_kotlin.R
-
+data class MidItemList(
+    val icon: Int,
+    val description: String
+)
+data class BottomItemList(
+    val newsId:Int,
+    val  image : Int,
+    val description: String
+)
 @Composable
-fun PageTwo(navController: NavController)
+fun PageTwo(navController: NavController,midItemList: ArrayList<MidItemList>,bottomItemList: ArrayList<BottomItemList>)
 {
     var text by remember { mutableStateOf("") }
     Column(modifier = Modifier
@@ -104,77 +119,10 @@ fun PageTwo(navController: NavController)
                 Image(painter = painterResource(id = R.drawable.arc_2), contentDescription ="",modifier = Modifier
                     .fillMaxWidth()
                     .offset(0.dp, -2.dp))
-                Row(modifier= Modifier.fillMaxWidth()){
-                    Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedCard(shape = RoundedCornerShape(15.dp),
-                        colors = CardDefaults.elevatedCardColors(
-                            containerColor = colorResource(id = R.color.light_white),
-                            contentColor = colorResource(id = R.color.black)
-                        ),
-                        modifier= Modifier
-                            .background(Color.Transparent)
-                            .height(120.dp)
-                            .width(120.dp)
-
-                    )
-                    {
-                        Image(painter = painterResource(id = R.drawable.favorites), contentDescription ="",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(15.dp, 15.dp, 15.dp, 0.dp))
-
-                        Text(text = "Favorites",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(0.dp, 10.dp),
-                            textAlign = TextAlign.Center)
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedCard(shape = RoundedCornerShape(15.dp),
-                        colors = CardDefaults.elevatedCardColors(
-                            containerColor = colorResource(id = R.color.light_white),
-                            contentColor = colorResource(id = R.color.black)
-                        ),
-                        modifier= Modifier
-                            .background(Color.Transparent)
-                            .height(120.dp)
-                            .width(120.dp)
-                    )
-                    {
-                        Image(painter = painterResource(id = R.drawable.message), contentDescription ="",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(15.dp, 15.dp, 15.dp, 0.dp))
-
-                        Text(text = "Messages",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(0.dp, 10.dp),
-                            textAlign = TextAlign.Center)
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedCard(shape = RoundedCornerShape(15.dp),
-                        colors = CardDefaults.elevatedCardColors(
-                            containerColor = colorResource(id = R.color.light_white),
-                            contentColor = colorResource(id = R.color.black)
-                        ),
-                        modifier= Modifier
-                            .background(Color.Transparent)
-                            .height(120.dp)
-                            .width(120.dp)
-                    )
-                    {
-                        Image(painter = painterResource(id = R.drawable.social), contentDescription ="",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(15.dp, 15.dp, 15.dp, 0.dp))
-
-                        Text(text = "Social",modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(0.dp, 10.dp),
-                            textAlign = TextAlign.Center)
-                    }
+                LazyRow(modifier= Modifier.fillMaxWidth()){
+                  items(midItemList){item: MidItemList ->
+                      CreateCard(icon = item.icon, description =item.description )
+                  }
                 }
 
             }
@@ -188,24 +136,10 @@ fun PageTwo(navController: NavController)
                 containerColor = colorResource(id = R.color.light_white),
                 contentColor = colorResource(id = R.color.black)
             )){
-                Row(modifier= Modifier.fillMaxWidth()) {
-                    Column(
-                        Modifier
-                            .padding(5.dp)
-                            .weight(1f)) {
-                        Image(painter = painterResource(id = R.drawable.trends), contentDescription ="" )
-                        Text(text="Future in AI. What will tomorrow be like.",modifier= Modifier
-                            .width(200.dp)
-                            .padding(5.dp))
-                    }
-                    Column(
-                        Modifier
-                            .padding(5.dp)
-                            .weight(1f)) {
-                        Image(painter = painterResource(id = R.drawable.trends2), contentDescription ="" )
-                        Text(text="Important points in concluding a work on.",modifier= Modifier
-                            .width(200.dp)
-                            .padding(5.dp))
+                LazyRow(modifier= Modifier.fillMaxWidth()) {
+                    items(bottomItemList){
+                        item:BottomItemList->
+                        CreateImgDesc(item.image,item.description, item.newsId)
                     }
                 }
 
@@ -225,4 +159,56 @@ fun PageTwo(navController: NavController)
 
         }
     }
+}
+@Composable
+fun CreateImgDesc(img:Int,description: String,newsId: Int)
+{
+    val context = LocalContext.current
+    Column(
+        Modifier
+            .padding(5.dp)
+            .fillMaxWidth()) {
+        Spacer(modifier = Modifier.width(5.dp))
+        Image(painter = painterResource(id = img), contentDescription ="",
+        modifier = Modifier.width(175.dp).clickable {
+            Toast.makeText(context,newsId.toString(),Toast.LENGTH_LONG).show()
+
+        })
+        Text(text=description,modifier= Modifier
+            .width(175.dp)
+            .padding(5.dp))
+        Spacer(modifier = Modifier.width(5.dp))
+    }
+}
+@Composable
+fun CreateCard(icon:Int,description: String)
+{
+    Spacer(modifier = Modifier.width(5.dp))
+    ElevatedCard(shape = RoundedCornerShape(15.dp),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = colorResource(id = R.color.light_white),
+            contentColor = colorResource(id = R.color.black)
+        ),
+        modifier= Modifier
+            .background(Color.Transparent)
+            .height(120.dp)
+            .width(120.dp)
+
+
+    ) {
+        Image(painter = painterResource(id = icon), contentDescription ="",modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .padding(15.dp, 15.dp, 15.dp, 0.dp)
+
+        )
+
+        Text(text = description,modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .padding(0.dp, 10.dp),
+            textAlign = TextAlign.Center)
+    }
+    Spacer(modifier = Modifier.width(5.dp))
+
 }
