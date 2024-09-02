@@ -69,6 +69,7 @@ import androidx.compose.ui.zIndex
 import com.example.uicomponents_compose_kotlin.R.color.light_white
 import com.example.uicomponents_compose_kotlin.pages.Menu
 import com.example.uicomponents_compose_kotlin.pages.PageThree
+import com.example.uicomponents_compose_kotlin.pages.Person
 import com.example.uicomponents_compose_kotlin.ui.theme.UIComponentsComposeKotlinTheme
 
 class MainActivity : ComponentActivity() {
@@ -96,7 +97,8 @@ fun Greeting(modifier: Modifier = Modifier) {
     menuItemList.add(Menu(R.drawable.btn_4,"My Playlist"))
     menuItemList.add(Menu(R.drawable.btn_5,"Share"))
     menuItemList.add(Menu(R.drawable.btn_6,"Logout"))
-    PageThree(modifier = modifier, name = "Kadir Duran", email ="kadirduran60@gmail.com" ,R.drawable.user_2,menuItemList )
+    val person = Person("Kadir Duran","kadirduran61@gmail.com",R.drawable.user_2)
+    PageThree(modifier = modifier, person,menuItemList )
 }
 
 @Preview(showBackground = true)

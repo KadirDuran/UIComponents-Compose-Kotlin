@@ -33,9 +33,13 @@ data class Menu(
     val imgId : Int,
     val name : String
 )
-
+data class Person(
+    val name : String,
+    val email : String,
+    val img : Int
+)
 @Composable
-fun PageThree(modifier: Modifier, name: String, email:String, image:Int,menu : ArrayList<Menu> )
+fun PageThree(modifier: Modifier, person: Person,menu : ArrayList<Menu> )
 {
     Column(
         modifier
@@ -97,7 +101,7 @@ fun PageThree(modifier: Modifier, name: String, email:String, image:Int,menu : A
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(painter = painterResource(id =image), contentDescription = null)
+                Image(painter = painterResource(id =person.img), contentDescription = null)
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,13 +110,13 @@ fun PageThree(modifier: Modifier, name: String, email:String, image:Int,menu : A
                         .background(colorResource(id = R.color.light_white))
                 ) {
                     Text(
-                        text = name,
+                        text = person.name,
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.boldfont)),
                         color = colorResource(id = R.color.black)
                     )
                     Text(
-                        text = email,
+                        text = person.email,
                         fontSize = 15.sp,
                         fontFamily = FontFamily(Font(R.font.boldfont)),
                         color = colorResource(id = R.color.black)
