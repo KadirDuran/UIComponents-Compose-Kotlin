@@ -1,5 +1,5 @@
-# UI-Design-Kotlin Projesi
-# Bu uygulamada örnek bir tasarım kodlanmıştır.
+# UIDesign-Compose-Kotlin Projesi
+# Bu uygulamada örnek bir tasarım compose kütüphanesi ile kodlanmıştır.
 ![Screenrecorder-2024-09-02-21-39-29-936-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/d92f5d1c-d5da-4f54-a08a-8402b3f61039)
 
 <h1 align="center">Hi 👋, I'm Kadir</h1>
