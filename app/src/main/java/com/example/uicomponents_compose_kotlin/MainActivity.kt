@@ -66,9 +66,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.uicomponents_compose_kotlin.R.color.light_white
 import com.example.uicomponents_compose_kotlin.pages.Menu
+import com.example.uicomponents_compose_kotlin.pages.PageOne
 import com.example.uicomponents_compose_kotlin.pages.PageThree
+import com.example.uicomponents_compose_kotlin.pages.PageTwo
 import com.example.uicomponents_compose_kotlin.pages.Person
 import com.example.uicomponents_compose_kotlin.ui.theme.UIComponentsComposeKotlinTheme
 
@@ -77,11 +83,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            UIComponentsComposeKotlinTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+           val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "PageOne" ){
+                    composable(route = "PageOne"){
+                            PageOne(navController)
+                    }
+                composable(route = "PageTwo") {
+                    PageTwo(navController)
+                }
+                composable(route = "PageThree"){
+                    ThreePageStart(modifier =Modifier,navController)
                 }
             }
         }
@@ -90,15 +101,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-    val menuItemList = ArrayList<Menu>()
-    menuItemList.add(Menu(R.drawable.btn_1,"Notification"))
-    menuItemList.add(Menu(R.drawable.btn_2,"Calendar"))
-    menuItemList.add(Menu(R.drawable.btn_3,"Gallery"))
-    menuItemList.add(Menu(R.drawable.btn_4,"My Playlist"))
-    menuItemList.add(Menu(R.drawable.btn_5,"Share"))
-    menuItemList.add(Menu(R.drawable.btn_6,"Logout"))
-    val person = Person("Kadir Duran","kadirduran61@gmail.com",R.drawable.user_2)
-    PageThree(modifier = modifier, person,menuItemList )
+
 }
 
 @Preview(showBackground = true)
@@ -107,5 +110,18 @@ fun GreetingPreview() {
     UIComponentsComposeKotlinTheme {
         Greeting()
     }
+}
+@Composable
+fun ThreePageStart(modifier: Modifier,navController: NavController)
+{
+    val menuItemList = ArrayList<Menu>()
+    menuItemList.add(Menu(R.drawable.btn_1,"Notification"))
+    menuItemList.add(Menu(R.drawable.btn_2,"Calendar"))
+    menuItemList.add(Menu(R.drawable.btn_3,"Gallery"))
+    menuItemList.add(Menu(R.drawable.btn_4,"My Playlist"))
+    menuItemList.add(Menu(R.drawable.btn_5,"Share"))
+    menuItemList.add(Menu(R.drawable.btn_6,"Logout"))
+    val person = Person("Kadir Duran","kadirduran61@gmail.com",R.drawable.user_2)
+    PageThree(navController, modifier = modifier, person,menuItemList )
 }
 

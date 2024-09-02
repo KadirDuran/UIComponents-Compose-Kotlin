@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.uicomponents_compose_kotlin.R
 data class Menu(
     val imgId : Int,
@@ -39,7 +41,7 @@ data class Person(
     val img : Int
 )
 @Composable
-fun PageThree(modifier: Modifier, person: Person,menu : ArrayList<Menu> )
+fun PageThree(navController: NavController, modifier: Modifier, person: Person,menu : ArrayList<Menu> )
 {
     Column(
         modifier
@@ -49,7 +51,7 @@ fun PageThree(modifier: Modifier, person: Person,menu : ArrayList<Menu> )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp, 20.dp, 20.dp, 10.dp)
+                .padding(20.dp, 40.dp, 20.dp, 10.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -63,6 +65,9 @@ fun PageThree(modifier: Modifier, person: Person,menu : ArrayList<Menu> )
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(10.dp)
+                        .clickable {
+                            navController.popBackStack()
+                        }
                 )
 
             }

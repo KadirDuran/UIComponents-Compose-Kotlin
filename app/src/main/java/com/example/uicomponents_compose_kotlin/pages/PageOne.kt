@@ -22,11 +22,12 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.uicomponents_compose_kotlin.R
 
 
 @Composable
-fun PageOne()
+fun PageOne(navController: NavController)
 {
     Column(
         modifier = Modifier
@@ -76,7 +77,9 @@ fun PageOne()
             )
 
             Button(
-                onClick = { /* Handle button click */ },
+                onClick = {
+                    navController.navigate("PageTwo")
+                },
                 shape = RoundedCornerShape(5.dp), modifier = Modifier
                     .fillMaxWidth()
                     .padding(40.dp, 0.dp)

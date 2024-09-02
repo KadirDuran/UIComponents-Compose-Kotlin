@@ -39,10 +39,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.uicomponents_compose_kotlin.R
 
 @Composable
-fun PageTwo()
+fun PageTwo(navController: NavController)
 {
     var text by remember { mutableStateOf("") }
     Column(modifier = Modifier
@@ -56,15 +57,15 @@ fun PageTwo()
                 .padding(0.dp, 50.dp, 0.dp, 0.dp), Arrangement.SpaceEvenly) {
                 Image(painter = painterResource(id = R.drawable.user_1) , contentDescription ="",
                     modifier = Modifier.weight(1.25f))
-                Text(text = "Hi, Kadir", modifier= Modifier
+                Text(text = "Hi, Kadir",color = Color.White, modifier= Modifier
                     .align(Alignment.CenterVertically)
                     .weight(2.5f), fontSize = 20.sp)
                 Image(painter = painterResource(id = R.drawable.notification) , contentDescription ="",
                     modifier = Modifier.weight(1.25f))
             }
 
-            Text(text = "Find Your Favorits", fontFamily = FontFamily(Font(R.font.boldfont)), fontSize =20.sp,modifier = Modifier.padding(30.dp,10.dp,0.dp,0.dp) )
-            Text(text = "Here", fontFamily = FontFamily(Font(R.font.boldfont)), fontSize =20.sp,modifier = Modifier.padding(30.dp,2.dp,0.dp,0.dp) )
+            Text(text = "Find Your Favorits", fontFamily = FontFamily(Font(R.font.boldfont)),color = Color.White, fontSize =20.sp,modifier = Modifier.padding(30.dp,10.dp,0.dp,0.dp) )
+            Text(text = "Here", fontFamily = FontFamily(Font(R.font.boldfont)),color =Color.White, fontSize =20.sp,modifier = Modifier.padding(30.dp,2.dp,0.dp,0.dp) )
             TextField(
                 value = text, onValueChange = { text = it },
                 label = { Text("Search", color = colorResource(id = R.color.light_white)) },
@@ -210,7 +211,9 @@ fun PageTwo()
 
             }
             Row(modifier= Modifier.fillMaxSize(),verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Absolute.Right){
-                Button(onClick = { /*TODO*/ },modifier= Modifier
+                Button(onClick = {
+                    navController.navigate("PageThree")
+                },modifier= Modifier
                     .fillMaxWidth()
                     .padding(40.dp, 40.dp), shape = RoundedCornerShape(5.dp), colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.darkblue),
