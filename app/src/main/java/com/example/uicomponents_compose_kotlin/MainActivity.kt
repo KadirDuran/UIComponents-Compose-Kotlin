@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
@@ -44,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.*
 
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.RectangleShape
@@ -69,7 +72,6 @@ class MainActivity : ComponentActivity() {
             UIComponentsComposeKotlinTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -79,147 +81,63 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
-    Column(modifier = Modifier
+fun Greeting(modifier: Modifier = Modifier) {
+Column(
+    modifier
         .fillMaxSize()
-        .background(color = colorResource(id = R.color.darkblue))) {
-Column(modifier = Modifier
-    .weight(0.6f)
-    .fillMaxWidth()) {
-    Row(modifier = Modifier
+        .background(colorResource(id = R.color.darkblue))) {
+
+    Row(modifier= Modifier
         .fillMaxWidth()
-        .padding(0.dp, 50.dp, 0.dp, 0.dp),Arrangement.SpaceEvenly) {
-        Image(painter = painterResource(id = R.drawable.user_1) , contentDescription ="",
-            modifier = Modifier.weight(1.25f))
-        Text(text = "Hi, Kadir", modifier= Modifier
-            .align(Alignment.CenterVertically)
-            .weight(2.5f), fontSize = 20.sp)
-        Image(painter = painterResource(id = R.drawable.notification) , contentDescription ="",
-            modifier = Modifier.weight(1.25f))
+        .padding(20.dp, 20.dp, 20.dp, 10.dp)){
+        Box(modifier= Modifier
+            .clip(shape = CircleShape)
+            .size(50.dp)
+            .background(colorResource(id = R.color.dark_white)))
+        {
+            Image(painter = painterResource(id = R.drawable.back) , contentDescription ="",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp))
+
+        }
+        Text(text="PROFILE", fontSize = 20.sp, color = Color.White, textAlign = TextAlign.Center,
+            fontFamily = FontFamily(Font(R.font.boldfont)), modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 40.dp)
+                .align(Alignment.CenterVertically))
+
     }
 
-    Text(text = "Find Your Favorits", fontFamily = FontFamily(Font(R.font.boldfont)), fontSize =20.sp,modifier = Modifier.padding(30.dp,10.dp,0.dp,0.dp) )
-    Text(text = "Here", fontFamily = FontFamily(Font(R.font.boldfont)), fontSize =20.sp,modifier = Modifier.padding(30.dp,2.dp,0.dp,0.dp) )
-    TextField(
-        value = text, onValueChange = { text = it },
-        label = { Text("Search", color = colorResource(id = R.color.light_white)) },
-        shape = RoundedCornerShape(25.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(50.dp, 20.dp),
+    Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
 
-        leadingIcon = {
-            Icon(painter = painterResource(id = R.drawable.search), contentDescription = "")
-        },
-        trailingIcon = {
-            Icon(painter = painterResource(id = R.drawable.microphone), contentDescription = "")
-        },
-        maxLines = 1,
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            focusedContainerColor = colorResource(id = R.color.dark_white),
-            unfocusedContainerColor = colorResource(id = R.color.dark_white)
-        ),
-    )
 
-}
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = colorResource(id = R.color.light_white))
-                .offset(0.dp, -35.dp)
-                .weight(1f)
-        ) {
-                Box(modifier= Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent)) {
-                    Image(painter = painterResource(id = R.drawable.arc_2), contentDescription ="",modifier = Modifier
-                        .fillMaxWidth()
-                        .offset(0.dp, -2.dp))
-                    Row(modifier=Modifier.fillMaxWidth()){
-                        Spacer(modifier = Modifier.width(8.dp))
-                        ElevatedCard(shape = RoundedCornerShape(15.dp),
-                            colors =CardDefaults.elevatedCardColors(
-                            containerColor = colorResource(id = R.color.light_white),
-                                contentColor = colorResource(id = R.color.black)
-                            ),
-                            modifier= Modifier
-                                .background(Color.Transparent)
-                                .height(120.dp)
-                                .width(120.dp)
-                                )
-                        {
-                            Image(painter = painterResource(id = R.drawable.favorites), contentDescription ="",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(15.dp, 15.dp, 15.dp, 0.dp))
 
-                            Text(text = "Favorites",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(0.dp, 10.dp),
-                                textAlign = TextAlign.Center)
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        ElevatedCard(shape = RoundedCornerShape(15.dp),
-                            colors =CardDefaults.elevatedCardColors(
-                                containerColor = colorResource(id = R.color.light_white),
-                                contentColor = colorResource(id = R.color.black)
-                            ),
-                            modifier= Modifier
-                                .background(Color.Transparent)
-                                .height(120.dp)
-                                .width(120.dp)
-                        )
-                        {
-                            Image(painter = painterResource(id = R.drawable.favorites), contentDescription ="",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(15.dp, 15.dp, 15.dp, 0.dp))
+        Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+    Image(painter = painterResource(id = R.drawable.arc_3), contentDescription ="")
 
-                            Text(text = "Favorites",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(0.dp, 10.dp),
-                                textAlign = TextAlign.Center)
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        ElevatedCard(shape = RoundedCornerShape(15.dp),
-                            colors =CardDefaults.elevatedCardColors(
-                                containerColor = colorResource(id = R.color.light_white),
-                                contentColor = colorResource(id = R.color.black)
-                            ),
-                            modifier= Modifier
-                                .background(Color.Transparent)
-                                .height(120.dp)
-                                .width(120.dp)
-                        )
-                        {
-                            Image(painter = painterResource(id = R.drawable.favorites), contentDescription ="",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(15.dp, 15.dp, 15.dp, 0.dp))
-
-                            Text(text = "Favorites",modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(0.dp, 10.dp),
-                                textAlign = TextAlign.Center)
-                        }
-                    }
-
-                }
+    Image(painter = painterResource(id = R.drawable.user_2), contentDescription = "")
+    Text("Kadir Duran", fontSize = 20.sp)
+    Text("kadirduran61@gmil.com")
         }
+        Column(modifier= Modifier
+            .fillMaxWidth()
+            .weight(1f)
+            .background(Color.White)) {
+            Text(text = "Selam")
+        }
+    }
+
+
+
+
+
 }
-
-
 }
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     UIComponentsComposeKotlinTheme {
-        Greeting("Android")
+        Greeting()
     }
 }
